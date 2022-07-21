@@ -1,0 +1,28 @@
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        sentinal_head = ListNode(next=head)
+        left_node = sentinal_head.next
+        prev_left_node = sentinal_head
+        count = 1
+        while left_node and count < left:
+            left_node = left_node.next
+            prev_left_node = prev_left_node.next
+            count += 1
+        
+        sentinal_node = ListNode(next=left_node)
+        node = left_node.next
+		
+		# Reversing the node from left to right
+        while node and count < right:
+            tmp_node = ListNode(node.val)
+            
+            tmp_node.next = sentinal_node.next
+            sentinal_node.next = tmp_node
+            
+            node = node.next
+            count += 1
+            
+        prev_left_node.next = sentinal_node.next
+        left_node.next = node
+        
+        return sentinal_head.next
